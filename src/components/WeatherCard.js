@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import LocalTime from './LocalTime';
+import WeatherForecastChart from './Diagram';
 
 const WeatherCard = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
@@ -28,7 +30,9 @@ const WeatherCard = ({ city }) => {
     <div>
       {weatherData && (
         <div>
-            <h2> {`${weatherData.sys.country}, ${weatherData.name}`}</h2>
+          <h2> {`${weatherData.sys.country}, ${weatherData.name}`}</h2>
+          <LocalTime />
+          <WeatherForecastChart city={city} />
           <p>{weatherData.weather[0].description}</p>
           <p>
             Temperature: {weatherData.main.temp}

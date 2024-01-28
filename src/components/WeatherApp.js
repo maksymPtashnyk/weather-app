@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTemperatureUnit, setLanguage, addCity, setCurrentWeather } from '../store/actions/weatherActions';
+import { setTemperatureUnit, setLanguage, addCity } from '../store/actions/weatherActions';
 import WeatherCard from './WeatherCard';
 
 const WeatherApp = () => {
@@ -45,7 +45,6 @@ const WeatherApp = () => {
           <select onChange={(e) => handleLanguageChange(e.target.value)}>
             <option value="en">English</option>
             <option value="uk">Ukrainian</option>
-            {/* Add other languages as needed */}
           </select>
         </label>
       </div>
@@ -57,9 +56,7 @@ const WeatherApp = () => {
           <button onClick={handleAddCity}>Add</button>
         </label>
       </div>
-
       <div>
-        {/* Display Weather Cards for each city */}
         {cities.map((city) => (
           <WeatherCard key={city} city={city} />
         ))}
