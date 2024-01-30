@@ -1,10 +1,17 @@
-import './App.css';
-import WeatherApp from './components/WeatherApp';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/index';
+
+import WeatherApp from './components/WeatherApp/WeatherApp';
+
 function App() {
   return (
-    <div className="App">
-      <WeatherApp/>
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <WeatherApp />
+      </PersistGate>
+    </Provider>
   );
 }
 

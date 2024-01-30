@@ -1,0 +1,96 @@
+.weather-card {
+  border: 1px solid #ccc;
+  position: relative;
+  padding: 10px 20px 10px 15px;
+  background: #FFFAF1 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+  border-color: transparent;
+}
+
+.weather-card-content {
+  /* Додайте стилі для вмісту компонента тут, якщо необхідно */
+}
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+}
+
+.remove-btn-img {
+  height: 15px;
+  width: 15px;
+}
+
+.top-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.location {
+  font: normal normal normal 16px/23px Jost;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.description {
+  /* Стилізуйте опис, якщо необхідно */
+}
+
+.battom-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.unit-buttons .button {
+  background-color: transparent;
+  border-color: transparent;
+  font: normal normal normal 22px/32px Jost;
+  letter-spacing: 0px;
+  color: #8D8D8D;
+}
+
+.unit-buttons .selected {
+  font: normal normal normal 22px/32px Jost;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.temperature {
+  display: flex;
+}
+
+.temperature p {
+  font: normal normal normal 44px/64px Jost;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.feels-like {
+  /* Стилізуйте "Feels like", якщо необхідно */
+}
+
+.wind {
+  /* Стилізуйте вітер, якщо необхідно */
+}
+
+.humidity {
+  /* Стилізуйте вологість, якщо необхідно */
+}
+
+.pressure {
+  /* Стилізуйте тиск, якщо необхідно */
+}
+
+.unit-buttons {
+  /* Стилізуйте контейнер для кнопок одиниць виміру, якщо необхідно */
+}
+
+.selected {
+  /* Стилізуйте обраний стан кнопок, якщо необхідно */
+}

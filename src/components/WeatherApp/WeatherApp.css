@@ -1,0 +1,18 @@
+.weather-app {
+  padding: 25px;
+  position: relative;
+}
+.weather-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 5 columns, min width 250px */
+  gap: 30px; /* Adjust the gap between cards as needed */
+}
+.drop-down {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+}
+
+.input-block {
+  margin-block: 120px;
+}

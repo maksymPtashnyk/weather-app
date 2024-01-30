@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './LocalTime.css'
 
 const LocalTime = () => {
   const [localTime, setLocalTime] = useState(null);
@@ -8,17 +9,13 @@ const LocalTime = () => {
       const now = new Date();
       setLocalTime(now);
     };
-  
-    // Оновлюємо місцевий час кожну секунду
     const intervalId = setInterval(updateLocalTime, 1000);
-  
-    // Очищаємо інтервал при виході з компоненту
     return () => clearInterval(intervalId);
   }, []);
 
   const formatDateTime = (date) => {
     if (!date) {
-      return ''; // Перевіряємо, чи дата визначена
+      return '';
     }
   
     const months = [
@@ -38,7 +35,7 @@ const LocalTime = () => {
   };
 
   return (
-      <p>{formatDateTime(localTime)}</p>
+      <p className='time'>{formatDateTime(localTime)}</p>
   );
 };
 

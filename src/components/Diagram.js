@@ -1,44 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  LabelList,
+} from 'recharts';
+import _ from 'lodash';
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  return `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}`;
+};
 
 const WeatherForecastChart = ({ city }) => {
-  const [forecastData, setForecastData] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchWeatherForecast = async () => {
+    const fetchData = async () => {
       try {
-        const apiKey = '16409403db7f194037fec02b3688e5a1';
-        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=068df69e3f782e51feb0b40621ccbc34`);
+        
+        // Групування даних за день і обчислення середньої температури
+        const dailyData = _(response.data.list)
+          .groupBy(item => item.dt_txt.split(' ')[0]) // Групування за днем
+          .map((group, date) => ({
+            dt_txt: date,
+            main: {
+              temp: Math.round(_.meanBy(group, 'main.temp')), // Обчислення і округлення середньої температури
+            },
+          }))
+          .value();
 
-        const filteredData = response.data.list.filter(item => item.dt_txt.includes('15:00'));
-
-        setForecastData(filteredData);
+        setData(dailyData);
       } catch (error) {
-        console.error('Error fetching weather forecast:', error);
+        console.error(error);
       }
     };
 
-    fetchWeatherForecast();
+    fetchData();
   }, [city]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    return `${day}.${month}`;
-  };
-
   return (
-    <ResponsiveContainer width="50%" height={300}>
-      <AreaChart data={forecastData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-        <XAxis dataKey="dt_txt" tickFormatter={formatDate} axisLine={false} tickLine={false} />
-        <YAxis hide mirror />
-        <Tooltip />
-        <Area type="monotone" dataKey="main.temp" fill="#8884d8" stroke="#8884d8" />
-      </AreaChart>
-    </ResponsiveContainer>
+    <AreaChart width="100%" height={100} data={data}>
+      <defs>
+        <linearGradient id="temperatureGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <XAxis dataKey="dt_txt" tickMargin={0} tickFormatter={formatDate} axisLine={false} tickLine={false} />
+      <YAxis hide={true} />
+      <Area type="monotone" dataKey="main.temp" fill="url(#temperatureGradient)" baseValue={'dataMin'} strokeWidth={0}>
+        <LabelList dataKey="main.temp" position="top" />
+      </Area>
+    </AreaChart>
   );
 };
 
