@@ -6,10 +6,17 @@
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
   border-color: transparent;
+  opacity: 0; /* Встановлюємо початкове значення прозорості */
+  animation: fadeIn 1s ease forwards; 
 }
 
-.weather-card-content {
-  /* Додайте стилі для вмісту компонента тут, якщо необхідно */
+.cold-bg {
+  background: #F1F2FF 0% 0% no-repeat padding-box;
+}
+
+.hebrew {
+  direction: rtl; /* Зміна напрямку тексту на справа наліво */
+  text-align: right; /* Вирівнювання тексту вправо */
 }
 
 .remove-btn {
@@ -23,13 +30,14 @@
 }
 
 .remove-btn-img {
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
 }
 
 .top-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .location {
@@ -39,7 +47,14 @@
 }
 
 .description {
-  /* Стилізуйте опис, якщо необхідно */
+  display: flex;
+  align-items: center;
+  margin-right: 11px;
+}
+
+.weather-icon {
+  width: 50px;
+  height: 50px;
 }
 
 .battom-block {
@@ -72,25 +87,38 @@
 }
 
 .feels-like {
-  /* Стилізуйте "Feels like", якщо необхідно */
+  font: normal normal normal 13px/19px Jost;
+  letter-spacing: 0px;
+  color: #C5C5C5;
 }
 
-.wind {
-  /* Стилізуйте вітер, якщо необхідно */
+.editional-info {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  font: normal normal normal 14px Jost;
+  letter-spacing: 0px;
 }
 
-.humidity {
-  /* Стилізуйте вологість, якщо необхідно */
+.warm {
+  font: normal normal 600 14px Jost;
+  letter-spacing: 0px;
+  color: #FFA25B;
 }
 
-.pressure {
-  /* Стилізуйте тиск, якщо необхідно */
+.cold{
+  font: normal normal 600 14px Jost;
+  letter-spacing: 0px;
+  color: #459DE9;
 }
-
-.unit-buttons {
-  /* Стилізуйте контейнер для кнопок одиниць виміру, якщо необхідно */
-}
-
-.selected {
-  /* Стилізуйте обраний стан кнопок, якщо необхідно */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

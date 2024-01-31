@@ -1,0 +1,19 @@
+{
+  "feelsLike": "Feels like:",
+  "wind": "Wind:",
+  "humidity": "Humidity:",
+  "pressure": "Pressure:",
+
+  "addButton": "Add",
+  "error": "Error",
+  "errorMessage": "The city already exists in the list",
+  "errorButton": "Close",
+  "modalQuestion": "This is your city ?",
+  "modalCancel": "Cancel",
+
+  "months": [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ],
+  "daysOfWeek": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+}
