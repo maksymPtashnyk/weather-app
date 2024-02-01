@@ -1,6 +1,8 @@
 import axios from 'axios';
+import _ from 'lodash';
 
-const apiKey = '068df69e3f782e51feb0b40621ccbc34';
+const apiKey = process.env.REACT_APP_WEATHER_USER_KEY;
+console.log(process.env.REACT_APP_WEATHER_USER_KEY);
 
 export const fetchWeatherByCity = async (cityName) => {
   try {
@@ -46,6 +48,47 @@ export const fetchCitySuggestions = async (input) => {
     }
   } catch (error) {
     console.error('Error fetching suggestions:', error);
+    throw error;
+  }
+};
+
+export const fetchWeatherCard = async (city, temperatureUnit, language) => {
+  try {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${temperatureUnit}&lang=${language}&appid=${apiKey}`;
+    const response = await axios.get(apiUrl);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    throw error;
+  }
+};
+
+export const fetchCityTime = async (lat, lon) => {
+  try {
+    const response = await axios.get(`http://api.geonames.org/timezoneJSON?formatted=true&lat=${lat}&lng=${lon}&username=ptaha.mx`);
+    return new Date(response.data.time);
+  } catch (error) {
+    console.error('Error fetching city time:', error);
+    throw error;
+  }
+};
+
+export const fetchWeatherForecastData = async (city) => {
+  try {
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+
+    return _(response.data.list)
+      .groupBy(item => item.dt_txt.split(' ')[0])
+      .map((group, date) => ({
+        dt_txt: date,
+        main: {
+          temp: Math.round(_.meanBy(group, 'main.temp')),
+        },
+      }))
+      .value();
+  } catch (error) {
+    console.error('Error fetching weather forecast data:', error);
     throw error;
   }
 };

@@ -3,7 +3,6 @@
   "wind": "Wind:",
   "humidity": "Humidity:",
   "pressure": "Pressure:",
-
   "addButton": "Add",
   "clearButton": "Clear",
   "error": "Error",
@@ -11,10 +10,27 @@
   "errorButton": "Close",
   "modalQuestion": "This is your city ?",
   "modalCancel": "Cancel",
-
   "months": [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
   ],
-  "daysOfWeek": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  "daysOfWeek": [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
+  ]
 }

@@ -16,7 +16,6 @@ font-size: 100%;
 font-family: inherit;
 vertical-align: baseline;
 }
-/* remember to define focus styles! */
 :focus {
 outline: 0;
 }
@@ -28,7 +27,6 @@ background: white;
 ol, ul {
 list-style: none;
 }
-/* tables still need 'cellspacing="0"' in the markup */
 table {
 border-collapse: separate;
 border-spacing: 0;

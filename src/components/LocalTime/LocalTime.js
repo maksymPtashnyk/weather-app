@@ -1,30 +1,26 @@
-// LocalTime.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { fetchCityTime } from '../../api/weatherApi';
 
 const LocalTime = ({ city }) => {
   const [localTime, setLocalTime] = useState(null);
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    const fetchCityTime = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://api.geonames.org/timezoneJSON?formatted=true&lat=${city.lat}&lng=${city.lon}&username=ptaha.mx`);
-        const cityTime = new Date(response.data.time);
-        setLocalTime(cityTime);
+        const time = await fetchCityTime(city.lat, city.lon);
+        setLocalTime(time);
       } catch (error) {
-        console.error('Error fetching city time:', error);
+        console.error('Error fetching time')
       }
     };
 
-    fetchCityTime();
-    const intervalId = setInterval(fetchCityTime, 1000000);
+    fetchData();
+    const intervalId = setInterval(fetchData, 1000000);
 
     return () => clearInterval(intervalId);
   }, [city]);
-
-  console.log(city.coord)
 
   const formatDateTime = (date) => {
     if (!date) {
@@ -49,5 +45,3 @@ const LocalTime = ({ city }) => {
 };
 
 export default LocalTime;
-
-

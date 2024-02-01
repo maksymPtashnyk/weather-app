@@ -1,4 +1,3 @@
-// WeatherApp.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage, addCity, removeCity } from '../../store/slices/weatherSlice';
@@ -85,7 +84,7 @@ const WeatherApp = () => {
 
   useEffect(() => {
     fetchWeatherByLocator();
-  }, [userLocation]);
+  });
 
   const handleAddCityConfirmed = () => {
     dispatch(addCity(modalCityData));

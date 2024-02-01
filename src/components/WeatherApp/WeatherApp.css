@@ -16,12 +16,10 @@
 
 .weather-app.hebrew .modal-button {
   flex-direction: row-reverse;
-  /* зеркальне відображення напрямку рядків */
 }
 
 .weather-app.hebrew .modal-content {
   text-align: right;
-  /* праворуч для зеркального відображення тексту */
 }
 
 .weather-container {
@@ -38,10 +36,7 @@
 .drop-down {
   position: absolute;
   top: 20px;
-  /* Adjust the top position as needed */
   right: 20px;
-
-  /* Adjust the right position as needed */
   @media (max-width: 500px) {
     right: 10px;
   }
@@ -120,9 +115,7 @@
   content: '';
   left: -25px;
   width: 16px;
-  /* Specify the desired width */
   height: 16px;
-  /* Specify the desired height */
   background-image: url(../../../public/Icon-language.svg);
   background-repeat: no-repeat;
   background-size: 100% 100%;

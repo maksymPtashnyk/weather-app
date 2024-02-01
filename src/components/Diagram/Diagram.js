@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Diagram.css';
-import axios from 'axios';
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  LabelList,
-} from 'recharts';
-import _ from 'lodash';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, LabelList } from 'recharts';
+import { fetchWeatherForecastData } from '../../api/weatherApi';
 
 const formatDate = (dateString) => {
   const date = new Date(dateString + ' UTC');
@@ -26,21 +18,10 @@ const WeatherForecastChart = ({ city, temp }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=068df69e3f782e51feb0b40621ccbc34`);
-
-        const dailyData = _(response.data.list)
-          .groupBy(item => item.dt_txt.split(' ')[0])
-          .map((group, date) => ({
-            dt_txt: date,
-            main: {
-              temp: Math.round(_.meanBy(group, 'main.temp')),
-            },
-          }))
-          .value();
-
-        setData(dailyData);
+        const forecastData = await fetchWeatherForecastData(city);
+        setData(forecastData);
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     };
 
@@ -69,4 +50,3 @@ const WeatherForecastChart = ({ city, temp }) => {
 };
 
 export default WeatherForecastChart;
-

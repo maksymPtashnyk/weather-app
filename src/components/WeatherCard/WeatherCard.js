@@ -1,36 +1,31 @@
 // WeatherCard.js
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import LocalTime from '../LocalTime/LocalTime';
 import { setTemperatureUnit } from '../../store/slices/weatherSlice';
 import './WeatherCard.css';
 import classNames from 'classnames';
 import WeatherForecastChart from '../Diagram/Diagram';
 import { useTranslation } from 'react-i18next';
+import { fetchWeatherCard } from '../../api/weatherApi';
 
 const WeatherCard = ({ city, onRemove }) => {
   const [weatherData, setWeatherData] = useState(null);
-  const [fadeIn, setFadeIn] = useState(false);
   const dispatch = useDispatch();
   const language = useSelector((state) => state.language);
   const { t } = useTranslation();
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
+    const fetchData = async () => {
       try {
-        const apiKey = '068df69e3f782e51feb0b40621ccbc34';
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.name}&units=${city.temperatureUnit}&lang=${language}&appid=${apiKey}`;
-        const response = await axios.get(apiUrl);
-
-        setWeatherData(response.data);
-        setFadeIn(true);
+        const data = await fetchWeatherCard(city.name, city.temperatureUnit, language);
+        setWeatherData(data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }
     };
 
-    fetchWeatherData();
+    fetchData();
   }, [city, language]);
 
   const handleTemperatureUnitChange = (unit) => {
