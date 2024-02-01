@@ -26,19 +26,18 @@ const LocalTime = ({ city }) => {
     if (!date) {
       return '';
     }
-
+  
     const months = i18n.t('months', { returnObjects: true });
     const daysOfWeek = i18n.t('daysOfWeek', { returnObjects: true });
-
+  
     const day = date.getDate();
     const month = months[date.getMonth()];
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const hours = date.getHours().toString().padStart(2, '0'); // Ensure two digits for hours
+    const minutes = date.getMinutes().toString().padStart(2, '0'); // Ensure two digits for minutes
     const dayOfWeek = daysOfWeek[date.getDay()];
-
+  
     return `${dayOfWeek}, ${day} ${month}, ${hours}:${minutes}`;
   };
-
   return (
     <p className='time'>{formatDateTime(localTime)}</p>
   );

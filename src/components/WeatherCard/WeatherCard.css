@@ -1,13 +1,21 @@
 .weather-card {
   position: relative;
   padding: 10px 20px 10px 15px;
-  background: #FFFAF1 0% 0% no-repeat padding-box;
+  background: #FFFAF1;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
   border-color: transparent;
   opacity: 0;
   animation: fadeIn 1s ease forwards; 
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Add smooth transitions */
 }
+
+.weather-card:hover {
+  box-shadow: 0px 8px 12px #00000029; /* Change the box-shadow on hover */
+  transform: scale(1.05); /* Apply a scale effect on hover */
+}
+
 
 .cold-bg {
   background: #F1F2FF 0% 0% no-repeat padding-box;
