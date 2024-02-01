@@ -12,7 +12,7 @@ import {
 import _ from 'lodash';
 
 const formatDate = (dateString) => {
-  const date = new Date(dateString + ' UTC'); // Append 'UTC' to the date string
+  const date = new Date(dateString + ' UTC');
   const localDate = new Date(date.toLocaleString('en-US', { timeZone: 'Europe/Kyiv' }));
   const day = localDate.getDate();
   const month = localDate.getMonth() + 1;

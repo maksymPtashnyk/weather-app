@@ -148,15 +148,10 @@
 
 [aria-expanded="true"] .p-icon {
   transform: rotate(180deg);
-  /* Обертання на 180 градусів */
   transition: transform 0.3s ease;
-  /* Додавання анімації з плавною зміною */
 }
 
-/* Для стану false (not expanded) */
 [aria-expanded="false"] .p-icon {
   transform: rotate(0deg);
-  /* Повертати назад на початковий кут */
   transition: transform 0.3s ease;
-  /* Додавання анімації з плавною зміною */
 }

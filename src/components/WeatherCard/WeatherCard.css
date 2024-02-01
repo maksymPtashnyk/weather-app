@@ -5,7 +5,7 @@
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
   border-color: transparent;
-  opacity: 0; /* Встановлюємо початкове значення прозорості */
+  opacity: 0;
   animation: fadeIn 1s ease forwards; 
 }
 
@@ -14,8 +14,8 @@
 }
 
 .hebrew {
-  direction: rtl; /* Зміна напрямку тексту на справа наліво */
-  text-align: right; /* Вирівнювання тексту вправо */
+  direction: rtl;
+  text-align: right;
 }
 
 .remove-btn {

@@ -10,8 +10,8 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 
 i18n.init({
-  interpolation: { escapeValue: false },  // React схильний екранувати переклад
-  lng: 'en',                               // Мова за замовчуванням
+  interpolation: { escapeValue: false },
+  lng: 'en',
   resources: {
     en: {
       translation: require('./locales/en.json'),
