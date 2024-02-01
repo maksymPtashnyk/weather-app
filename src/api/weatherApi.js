@@ -66,7 +66,9 @@ export const fetchWeatherCard = async (city, temperatureUnit, language) => {
 
 export const fetchCityTime = async (lat, lon) => {
   try {
-    const response = await axios.get(`http://api.geonames.org/timezoneJSON?formatted=true&lat=${lat}&lng=${lon}&username=ptaha.mx`);
+    const response = await axios.get(`http://api.geonames.org/timezoneJSON?formatted=true&lat=${lat}&lng=${lon}&username=ptaha.mx`, {
+  timeout: 5000, // Set a timeout in milliseconds (e.g., 5000 for 5 seconds)
+});
     return new Date(response.data.time);
   } catch (error) {
     console.error('Error fetching city time:', error);
