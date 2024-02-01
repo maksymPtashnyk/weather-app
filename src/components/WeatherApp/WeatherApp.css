@@ -135,6 +135,19 @@
   padding-left: 5px;
 }
 
+@media (max-width: 500px) {
+  .p-dropdown-panel {
+    width: 25%;
+  }
+  .p-dropdown-items-wrapper {
+    width: 100%;
+  }
+
+  .p-dropdown-item {
+    height: 25px;
+  }
+}
+
 [aria-selected="true"] {
   background-color: #F2F2F2;
 }
