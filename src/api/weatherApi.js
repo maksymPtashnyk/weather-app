@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-const apiKey = process.env.REACT_APP_WEATHER_USER_KEY;
+const apiKey = process.env.REACT_APP_WEATHER_USER_KEY || '068df69e3f782e51feb0b40621ccbc34';
 console.log(process.env.REACT_APP_WEATHER_USER_KEY);
 
 export const fetchWeatherByCity = async (cityName) => {
