@@ -53,7 +53,7 @@ const WeatherCard = ({ city, onRemove }) => {
             <div className='description'>
               <img
                 className="weather-icon"
-                src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
                 alt="Weather Icon"
               />
               <p className="text">{weatherData.weather[0].description}</p>
