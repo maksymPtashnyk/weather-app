@@ -1,6 +1,10 @@
 .weather-app {
   padding: 25px;
   position: relative;
+
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
 }
 
 .weather-app.hebrew .modal-content,
@@ -11,19 +15,24 @@
 }
 
 .weather-app.hebrew .modal-button {
-  flex-direction: row-reverse; /* зеркальне відображення напрямку рядків */
+  flex-direction: row-reverse;
+  /* зеркальне відображення напрямку рядків */
 }
 
 .weather-app.hebrew .modal-content {
-  text-align: right; /* праворуч для зеркального відображення тексту */
+  text-align: right;
+  /* праворуч для зеркального відображення тексту */
 }
 
 .weather-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  /* 5 columns, min width 250px */
   gap: 30px;
   transition: all 2s ease;
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }
 
 .drop-down {
@@ -31,122 +40,18 @@
   top: 20px;
   /* Adjust the top position as needed */
   right: 20px;
+
   /* Adjust the right position as needed */
+  @media (max-width: 500px) {
+    right: 10px;
+  }
+
 }
 
-.input-block {
-  position: relative;
-  margin-top: 95px;
-  margin-bottom: 120px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  height: 40px;
+.weather-app.hebrew .drop-down {
+  right: 40px;
 }
 
-.input {
-  position: relative;
-}
-
-.input-element {
-  width: 569px;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 5px;
-  border-color: transparent;
-  height: 40px;
-  box-sizing: border-box;
-  font: normal normal normal 14px/20px Jost;
-  letter-spacing: 0px;
-  color: #000000;
-  padding: 10px;
-}
-
-.button-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 40px;
-}
-
-.input-button {
-  width: 112px;
-  background: #459DE9;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 5px;
-  border-color: transparent;
-  cursor: pointer;
-  height: 40px;
-
-  font: normal normal normal 14px/20px Jost;
-  letter-spacing: 0px;
-  color: #FFFFFF;
-}
-
-.clear-button {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  right: 0;
-  height: 40px;
-  width: 60px;
-  background-color: red;
-  transition: transform 0.5s ease; /* Зменшив тривалість анімації до 0.5 секунди */
-  border-radius: 5px;
-  border: transparent;
-  color: white;
-}
-
-.clear-button.show {
-  transform: translateX(85%);
-}
-
-.weather-app.hebrew .clear-button.show {
-  transform: translateX(-170%);
-}
-
-.suggestions {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  z-index: 1;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 200px;
-  width: 100%;
-  /* Make the suggestions container the same width as the input */
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 5px;
-  border-color: transparent;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.suggestion-item {
-  cursor: pointer;
-  height: 23px;
-  display: flex;
-  align-items: center;
-  padding-top: 2px;
-  padding-left: 5px;
-  padding-bottom: 1px;
-
-  font: normal normal normal 14px/20px Jost;
-  letter-spacing: 0px;
-  color: #000000;
-}
-
-.suggestion-item:hover {
-  background-color: #F2F2F2;
-}
-
-.suggestion-item:first-child {
-  border-start-start-radius: 5px;
-}
-
-.suggestion-item:last-child {
-  border-end-end-radius: 5px;
-}
 
 .modal {
   position: fixed;
@@ -203,4 +108,55 @@
 
 .modal button:last-child:hover {
   background-color: #d32f2f;
+}
+
+.drop-down {
+  color: #AFAFAF;
+  width: 40px;
+}
+
+.drop-down::before {
+  position: absolute;
+  content: '';
+  left: -25px;
+  width: 16px;
+  /* Specify the desired width */
+  height: 16px;
+  /* Specify the desired height */
+  background-image: url(../../../public/Icon-language.svg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.p-dropdown-items-wrapper {
+  width: 71px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  font: normal normal normal 14px/20px Jost;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.p-dropdown-item {
+  padding-top: 3px;
+  padding-left: 5px;
+}
+
+[aria-selected="true"] {
+  background-color: #F2F2F2;
+}
+
+[aria-expanded="true"] .p-icon {
+  transform: rotate(180deg);
+  /* Обертання на 180 градусів */
+  transition: transform 0.3s ease;
+  /* Додавання анімації з плавною зміною */
+}
+
+/* Для стану false (not expanded) */
+[aria-expanded="false"] .p-icon {
+  transform: rotate(0deg);
+  /* Повертати назад на початковий кут */
+  transition: transform 0.3s ease;
+  /* Додавання анімації з плавною зміною */
 }

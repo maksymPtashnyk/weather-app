@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Diagram.css'
+import './Diagram.css';
 import axios from 'axios';
 import {
   ResponsiveContainer,
@@ -12,14 +12,16 @@ import {
 import _ from 'lodash';
 
 const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
+  const date = new Date(dateString + ' UTC'); // Append 'UTC' to the date string
+  const localDate = new Date(date.toLocaleString('en-US', { timeZone: 'Europe/Kyiv' }));
+  const day = localDate.getDate();
+  const month = localDate.getMonth() + 1;
   return `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}`;
 };
 
 const WeatherForecastChart = ({ city, temp }) => {
   const [data, setData] = useState([]);
+  const gradientId = `temperatureGradient-${city.replace(/\s+/g, '')}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,18 +50,18 @@ const WeatherForecastChart = ({ city, temp }) => {
   const getColor = (temperature) => (temperature < 0 ? '#5B8CFF' : '#FFA25B');
 
   return (
-    <ResponsiveContainer width="100%" height={150}>
+    <ResponsiveContainer width="100%" height={150} className='box'>
       <AreaChart data={data}>
         <defs>
-          <linearGradient id="temperatureGradient" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={getColor(temp)} stopOpacity={0.8} />
             <stop offset="95%" stopColor={getColor(temp)} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="dt_txt" tickMargin={10} tickFormatter={formatDate} axisLine={false} tickLine={false} height={50} className='data'/>
-        <YAxis hide={true} />
-        <Area type="monotone" dataKey="main.temp" fill={`url(#temperatureGradient)`} baseValue={'dataMin'} strokeWidth={0}>
-          <LabelList dataKey="main.temp" position="top" className='temperature'/>
+        <YAxis width={16} interval={0} className='y-axis'/>
+        <XAxis dataKey="dt_txt" tickMargin={10} tickFormatter={formatDate} axisLine={false} tickLine={false} height={50} className='data' margin={{ left: 20, right: 20 }} />
+        <Area type="monotone" dataKey="main.temp" fill={`url(#${gradientId})`} baseValue={'dataMin'} strokeWidth={0} className='area'>
+          <LabelList dataKey="main.temp" position="top" className='temperature' />
         </Area>
       </AreaChart>
     </ResponsiveContainer>
@@ -67,3 +69,4 @@ const WeatherForecastChart = ({ city, temp }) => {
 };
 
 export default WeatherForecastChart;
+

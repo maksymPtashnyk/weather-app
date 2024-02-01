@@ -4,6 +4,7 @@
   "humidity": "Вологість:",
   "pressure": "Тиск:",
   "addButton": "Додати",
+  "clearButton": "Очистити",
 
   "error": "Помилка",
   "errorMessage": "Це місто вже є в списку",

@@ -1,17 +1,15 @@
+// WeatherApp.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage, addCity, removeCity } from '../../store/slices/weatherSlice';
 import WeatherCard from '../WeatherCard/WeatherCard';
-import { useDebounce } from 'use-debounce';
-import axios from 'axios';
-import './WeatherApp.css'
+import './WeatherApp.css';
 import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
+import { fetchWeatherByLocation } from '../../api/weatherApi';
+import CityInput from '../CityInput/CityInput';
 
 const WeatherApp = () => {
-  const [newCity, setNewCity] = useState('');
-  const [debouncedNewCity] = useDebounce(newCity, 500);
-  const [suggestions, setSuggestions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [weatherFetched, setWeatherFetched] = useState(false);
@@ -36,191 +34,79 @@ const WeatherApp = () => {
     dispatch(setLanguage(lang));
   };
 
-  const handleAddCity = async () => {
-    if (debouncedNewCity) {
-      try {
-        const apiKey = '068df69e3f782e51feb0b40621ccbc34';
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${debouncedNewCity}&units=metric&appid=${apiKey}`
-        );
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser');
+    }
+  };
+  useEffect(() => {
+    getLocation();
+  }, []);
 
-        const newCityData = {
-          id: response.data.id,
-          name: response.data.name,
+  const fetchWeatherByLocator = async () => {
+    try {
+      if (userLocation && !weatherFetched) {
+        const { latitude, longitude } = userLocation;
+        const response = await fetchWeatherByLocation(latitude, longitude);
+
+        const userLocationData = {
+          id: response.id,
+          name: response.name,
           temperatureUnit: 'metric',
         };
 
-        // Check if the city already exists in the list based on id
-        if (!cities.some(city => city.id === newCityData.id)) {
-          dispatch(addCity(newCityData));
-          setNewCity('');
-          setSuggestions([]);
-        } else {
-          setShowModal(true);
-          setNewCity('');
-          setSuggestions([]);
+        const isCityAlreadyAdded = cities.some(
+          (city) => city.id === userLocationData.id || city.name.toLowerCase() === userLocationData.name.toLowerCase()
+        );
+
+        if (!isCityAlreadyAdded) {
+          setShowAddCityModal(true);
+          setModalCityData(userLocationData);
         }
-      } catch (error) {
-        console.error('Error fetching temperature data:', error);
-        // Handle error, e.g., show an alert to the user
+
+        setWeatherFetched(true);
       }
+    } catch (error) {
+      console.error('Error fetching weather data by location:', error);
     }
   };
 
   useEffect(() => {
-    const getUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setUserLocation({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
-          },
-          (error) => {
-            console.error('Error getting user location:', error);
-          }
-        );
-      } else {
-        console.error('Geolocation is not supported by this browser');
-      }
-    };
-
-    getUserLocation();
-  }, []);
-
-  useEffect(() => {
-    const fetchWeatherByLocation = async () => {
-      try {
-        if (userLocation && !weatherFetched) {
-          const { latitude, longitude } = userLocation;
-          const apiKey = '068df69e3f782e51feb0b40621ccbc34'; // Замініть на свій ключ API
-          const response = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`
-          );
-
-          const userLocationData = {
-            id: response.data.id,
-            name: response.data.name,
-            temperatureUnit: 'metric',
-          };
-          const isCityAlreadyAdded = cities.some(
-            (city) => city.id === userLocationData.id || city.name.toLowerCase() === userLocationData.name.toLowerCase()
-          );
-
-          if (!isCityAlreadyAdded) {
-            // Встановлюємо стан для відображення модального вікна
-            setShowAddCityModal(true);
-            // Передаємо дані для відображення в модальному вікні
-            setModalCityData(userLocationData);
-          }
-
-          setWeatherFetched(true);
-        }
-      } catch (error) {
-        console.error('Error fetching weather data by location:', error);
-      }
-    };
-
-    fetchWeatherByLocation();
-  }, [userLocation, cities, dispatch, weatherFetched]);
+    fetchWeatherByLocator();
+  }, [userLocation]);
 
   const handleAddCityConfirmed = () => {
     dispatch(addCity(modalCityData));
     setShowAddCityModal(false);
   };
 
-  // Додайте функцію для закриття модального вікна
   const handleModalClose = () => {
     setShowAddCityModal(false);
   };
-
-
 
   const handleRemoveCity = (cityToRemove) => {
     dispatch(removeCity(cityToRemove));
   };
 
-  const handleInputChange = async (input) => {
-    setNewCity(input);
-
-    // Check if the input is valid (not empty and has more than 2 characters, adjust as needed)
-    if (input.trim() !== '' && input.trim().length > 2) {
-      try {
-        const apiKey = '068df69e3f782e51feb0b40621ccbc34';
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/find?q=${input}&type=like&sort=population&cnt=5&appid=${apiKey}`
-        );
-
-        // Check if the API response contains the expected data
-        if (response.data && response.data.list) {
-          const uniqueNewSuggestions = Array.from(new Set(response.data.list.map((result) => result.name)))
-            .map((name) => response.data.list.find((result) => result.name === name))
-            .map((result) => ({
-              id: result.id, // Assuming 'id' is available in the API response
-              name: result.name,
-              country: result.sys.country,
-            }));
-
-          setSuggestions(uniqueNewSuggestions);
-        } else {
-          setSuggestions([]);
-        }
-      } catch (error) {
-        console.error('Error fetching suggestions:', error);
-        setSuggestions([]);
-      }
-    } else {
-      // If input is not valid, clear suggestions
-      setSuggestions([]);
-    }
-  };
-
-
-  const handleSuggestionClick = (suggestion) => {
-    setNewCity(suggestion);
-    handleAddCity();
-  };
-
   const isHebrew = i18n.language === 'he';
-
-  const handleClearInput = () => {
-    setNewCity('');
-    setSuggestions([]);
-  };
-
-
+  const isUkrainian = i18n.language === 'uk';
   return (
-    <div className={`weather-app ${isHebrew ? 'hebrew' : ''}`}>
-      <div>
-        <Dropdown value={language} onChange={(e) => changeLanguage(e.value)} options={languages} optionLabel="name" className="drop-down" />
-      </div>
+    <div className={`weather-app ${isHebrew ? 'hebrew' : ''} ${isUkrainian ? 'uk' : ''}`}>
+      <Dropdown value={language} onChange={(e) => changeLanguage(e.value)} options={languages} optionLabel="name" className="drop-down" />
 
-      <div>
-        <div className='input-block'>
-          <div class="input">
-            <input
-              className='input-element'
-              type="text"
-              value={newCity}
-              onChange={(e) => handleInputChange(e.target.value)}
-            />
-            <div className='suggestions'>
-              {suggestions.map((suggestion) => (
-                <div className='suggestion-item' key={suggestion.name} onClick={() => handleSuggestionClick(suggestion)}>
-                  {`${suggestion.name}, ${suggestion.country}`}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div class="button-container">
-            <button className='input-button' onClick={handleAddCity}>{t('addButton')}</button>
-            <button className={`clear-button ${debouncedNewCity ? 'show' : ''}`} onClick={handleClearInput}>Clear</button>
-          </div>
-        </div>
-
-      </div>
+      <CityInput setShowModal={setShowModal} />
       <div className="weather-container">
         {cities.map((city) => (
           <WeatherCard key={city.id} city={city} onRemove={() => handleRemoveCity(city.id)} />

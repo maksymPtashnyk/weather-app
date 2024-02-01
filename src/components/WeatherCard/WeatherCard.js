@@ -37,14 +37,14 @@ const WeatherCard = ({ city, onRemove }) => {
     dispatch(setTemperatureUnit({ cityId: city.id, temperatureUnit: unit }));
   };
 
-  let currentTemp = Math.round(weatherData?.main.temp);
+  const currentTemp = Math.round(weatherData?.main.temp);
+  const feelsLike = Math.round(weatherData?.main.feels_like);
   const isHebrew = language === 'he';
   return (
     <div className={classNames(
       "weather-card",
       currentTemp < 0 ? 'cold-bg' : '',
-      isHebrew ? 'hebrew' : '',
-      fadeIn ? '' : 'fade-out')}>
+      isHebrew ? 'hebrew' : '')}>
 
       {weatherData && (
         <div className={classNames("weather-card-content", isHebrew ? 'hebrew' : '')}>
@@ -77,7 +77,7 @@ const WeatherCard = ({ city, onRemove }) => {
                   >
                     °C
                   </button>
-                  |
+                  <div className='line'/>
                   <button
                     className={classNames(city.temperatureUnit === 'imperial' ? 'selected' : '', 'button')}
                     onClick={() => handleTemperatureUnitChange('imperial')}
@@ -87,13 +87,13 @@ const WeatherCard = ({ city, onRemove }) => {
                 </div>
               </div>
               <p className="feels-like">
-                {t('feelsLike')} {weatherData.main.feels_like > 0 ? `+${weatherData.main.feels_like}` : weatherData.main.feels_like}
-                {city.temperatureUnit === 'metric' ? '°C' : '°F'}
+               {t('feelsLike')}  <span>{feelsLike > 0 ? `+${feelsLike}` : feelsLike}
+                {city.temperatureUnit === 'metric' ? '°C' : '°F'}</span>
               </p>
             </div>
             <div className="editional-info">
               <p className="wind">
-                {t('wind')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.wind.speed} m/s</span>
+                {t('wind')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.wind.speed}{city.temperatureUnit === 'metric' ? 'm/s' : 'mph'}</span>
               </p>
               <p className="humidity">
                 {t('humidity')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.main.humidity} %</span>

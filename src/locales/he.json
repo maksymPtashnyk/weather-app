@@ -4,6 +4,7 @@
   "humidity": ":לחות",
   "pressure": ":לַחַץ",
   "addButton": ":לְהוֹסִיף",
+  "clearButton": "ברור",
 
   "error": "שְׁגִיאָה",
   "errorMessage": "העיר כבר קיימת ברשימה",

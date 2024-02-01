@@ -5,6 +5,7 @@
   "pressure": "Pressure:",
 
   "addButton": "Add",
+  "clearButton": "Clear",
   "error": "Error",
   "errorMessage": "The city already exists in the list",
   "errorButton": "Close",
