@@ -5,7 +5,7 @@ import { fetchCitySuggestions, fetchWeatherByCity } from '../../api/weatherApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCity } from '../../store/slices/weatherSlice';
 import { useTranslation } from 'react-i18next'
-import './CityInput.css'
+import styles from'./CityInput.module.scss'
 
 const CityInput = ({ setShowModal }) => {
   const [newCity, setNewCity] = useState('');
@@ -77,18 +77,18 @@ const CityInput = ({ setShowModal }) => {
   };
 
   return (
-    <div className="input-block">
-      <div className="input">
+    <div className={styles.input__block}>
+      <div className={styles.input}>
         <input
-          className="input-element"
+          className={styles.input__element}
           type="text"
           value={newCity}
           onChange={(e) => handleInputChange(e.target.value)}
         />
-        <div className="suggestions">
+        <div className={styles.suggestion}>
           {suggestions.map((suggestion) => (
             <div
-              className="suggestion-item"
+              className={styles.suggestion__item}
               key={suggestion.name}
               onClick={() => handleSuggestionClick(suggestion)}
             >
@@ -98,12 +98,12 @@ const CityInput = ({ setShowModal }) => {
         </div>
       </div>
 
-      <div className="button-container">
-        <button className="input-button" onClick={handleAddCity}>
+      <div className={styles.button__container}>
+        <button className={styles.input__button} onClick={handleAddCity}>
           {t('addButton')}
         </button>
         <button
-          className={`clear-button ${debouncedNewCity ? 'show' : ''}`}
+          className={`${styles.clear__button} ${debouncedNewCity ? styles.show : ''}`}
           onClick={handleClearInput}
         >
           {t('clearButton')}

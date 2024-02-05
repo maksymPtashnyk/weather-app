@@ -1,4 +1,4 @@
-.weather-card {
+.weather__card {
   position: relative;
   padding: 10px 20px 10px 15px;
   background: #FFFAF1;
@@ -6,18 +6,17 @@
   border-radius: 5px;
   border-color: transparent;
   opacity: 0;
-  animation: fadeIn 1s ease forwards; 
+  animation: fadeIn 1s ease forwards;
   cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Add smooth transitions */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    box-shadow: 0px 8px 12px #00000029;
+    transform: scale(1.05);
+  }
 }
 
-.weather-card:hover {
-  box-shadow: 0px 8px 12px #00000029; /* Change the box-shadow on hover */
-  transform: scale(1.05); /* Apply a scale effect on hover */
-}
-
-
-.cold-bg {
+.cold__bg {
   background: #F1F2FF 0% 0% no-repeat padding-box;
 }
 
@@ -26,7 +25,7 @@
   text-align: right;
 }
 
-.remove-btn {
+.remove__btn {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -34,14 +33,14 @@
   background-color: transparent;
   border-color: transparent;
   padding: 0;
+
+  &__img {
+    height: 20px;
+    width: 20px;
+  }
 }
 
-.remove-btn-img {
-  height: 20px;
-  width: 20px;
-}
-
-.top-content {
+.top__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,56 +58,57 @@
   margin-right: 11px;
 }
 
-.weather-icon {
+.weather__icon {
   width: 50px;
   height: 50px;
 }
 
-.battom-block {
+.battom__block {
   display: flex;
   justify-content: space-between;
 }
 
-.unit-buttons {
+.unit__buttons {
   display: flex;
   align-items: flex-start;
-}
 
-.unit-buttons .button {
-  background-color: transparent;
-  border-color: transparent;
-  font: normal normal normal 22px/32px Jost;
-  letter-spacing: 0px;
-  color: #8D8D8D;
-  cursor: pointer;
-}
+  .button {
+    background-color: transparent;
+    border-color: transparent;
+    font: normal normal normal 22px/32px Jost;
+    letter-spacing: 0px;
+    color: #8D8D8D;
+    cursor: pointer;
+  }
 
-.unit-buttons .selected {
-  font: normal normal normal 22px/32px Jost;
-  letter-spacing: 0px;
-  color: #000000;
+  .selected {
+    font: normal normal normal 22px/32px Jost;
+    letter-spacing: 0px;
+    color: #000000;
+  }
 }
 
 .temperature {
   display: flex;
+
+  p {
+    font: normal normal normal 44px/64px Jost;
+    letter-spacing: 0px;
+    color: #000000;
+  }
 }
 
-.temperature p {
-  font: normal normal normal 44px/64px Jost;
-  letter-spacing: 0px;
-  color: #000000;
-}
-
-.feels-like {
+.feels__like {
   font: normal normal normal 13px/19px Jost;
   letter-spacing: 0px;
   color: #C5C5C5;
-}
-.feels-like span {
-  font: normal normal 600 13px/19px Jost;
+
+  span {
+    font: normal normal 600 13px/19px Jost;
+  }
 }
 
-.editional-info {
+.aditional__info {
   display: flex;
   gap: 5px;
   flex-direction: column;
@@ -125,15 +125,17 @@
   color: #FFA25B;
 }
 
-.cold{
+.cold {
   font: normal normal 600 14px Jost;
   letter-spacing: 0px;
   color: #459DE9;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

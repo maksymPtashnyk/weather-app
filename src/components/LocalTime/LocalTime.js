@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchCityTime } from '../../api/weatherApi';
+import styles from './LocalTime.module.scss'
 
 const LocalTime = ({ city }) => {
   const [localTime, setLocalTime] = useState(null);
@@ -39,7 +40,7 @@ const LocalTime = ({ city }) => {
     return `${dayOfWeek}, ${day} ${month}, ${hours}:${minutes}`;
   };
   return (
-    <p className='time'>{formatDateTime(localTime)}</p>
+    <p className={styles.time}>{formatDateTime(localTime)}</p>
   );
 };
 
