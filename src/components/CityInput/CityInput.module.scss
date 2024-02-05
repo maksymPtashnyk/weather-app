@@ -10,7 +10,7 @@
 
   .input {
     position: relative;
-    
+
     &__element {
       width: 569px;
       box-shadow: 0px 3px 6px #00000029;
@@ -24,7 +24,6 @@
       padding: 10px;
     }
   }
-
 
   .button__container {
     display: flex;
@@ -74,18 +73,13 @@
         transform: translateX(85%);
         box-shadow: 0px 3px 6px #00000029;
       }
-
-      .weather__app.uk &.show {
-        transform: translateX(90%);
-        width: 80px;
-      }
-
-      .weather__app.hebrew &.show {
-        transform: translateX(-170%);
-      }
     }
-  }
 
+  }
+  &.uk .button__container .clear__button.show {
+    transform: translateX(90%);
+    width: 80px;
+  }
   @media (max-width: 820px) {
     width: 100%;
     justify-content: space-between;
@@ -94,38 +88,38 @@
 
     .input {
       width: 100%;
-    }
 
-    .input__element {
-      width: 100%;
-      flex-grow: 1;
+       &__element  {
+        width: 100%;
+        flex-grow: 1;
+      }
+      
     }
+.button__container .input__button {
+        width: 60px;
+      }
 
-    .input__button {
-      width: 60px;
-    }
-
-    .weather__app.uk & .clear__button {
+    &.uk .button__container .clear__button {
       width: 70px;
     }
 
-    .weather__app.hebrew & .clear__button {
+    &.hebrew .button__container .clear__button {
       width: 60px;
     }
 
-    .weather__app.uk & .input__button {
+    &.uk .button__container .input__button {
       width: 70px;
     }
 
-    .clear__button.show {
+    & .button__container .clear__button.show {
       transform: translateY(85%);
     }
 
-    .weather__app.hebrew & .clear__button.show {
+    &.hebrew .button__container .clear__button.show {
       transform: translateY(85%);
     }
 
-    .weather__app.uk & .clear__button.show {
+    &.uk .button__container .clear__button.show {
       transform: translateY(90%);
       width: 70px;
     }
@@ -172,4 +166,8 @@
       border-end-end-radius: 5px;
     }
   }
+}
+
+.input__block.hebrew {
+  transform: scaleX(-1);
 }

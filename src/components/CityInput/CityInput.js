@@ -12,7 +12,7 @@ const CityInput = ({ setShowModal }) => {
   const [debouncedNewCity] = useDebounce(newCity, 500);
   const [suggestions, setSuggestions] = useState([]);
 
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const dispatch = useDispatch();
   const cities = useSelector((state) => state.cities);
@@ -76,8 +76,11 @@ const CityInput = ({ setShowModal }) => {
     setSuggestions([]);
   };
 
+  const isHebrew = i18n.language === 'he';
+  const isUkrainian = i18n.language === 'uk';
+
   return (
-    <div className={styles.input__block}>
+    <div className={`${styles.input__block} ${isHebrew ? styles.hebrew : ''} ${isUkrainian ? styles.uk : ''}`}>
       <div className={styles.input}>
         <input
           className={styles.input__element}
