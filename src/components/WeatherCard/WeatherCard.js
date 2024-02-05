@@ -48,6 +48,9 @@ const WeatherCard = ({ city, onRemove }) => {
           <div className={styles.top__content}>
             <h2 className={classNames(styles.location, isHebrew ? styles.hebrew : '')}>
               {`${weatherData.sys.country}, ${weatherData.name}`}
+            {city.location && 
+            <img src="geo-icon.png" alt="Geolocation icon">
+            </img>}
             </h2>
             <div className={styles.description}>
               <img
