@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LocalTime from '../LocalTime/LocalTime';
 import { setTemperatureUnit } from '../../store/slices/weatherSlice';
-import './WeatherCard.css';
+import styles from './WeatherCard.module.scss';
 import classNames from 'classnames';
 import WeatherForecastChart from '../Diagram/Diagram';
 import { useTranslation } from 'react-i18next';
@@ -36,71 +36,69 @@ const WeatherCard = ({ city, onRemove }) => {
   const isHebrew = language === 'he';
   return (
     <div className={classNames(
-      "weather-card",
-      currentTemp < 0 ? 'cold-bg' : '',
-      isHebrew ? 'hebrew' : '')}>
+      styles.weather__card,
+      currentTemp < 0 ? styles.cold__bg : '',
+      isHebrew ? styles.hebrew : '')}>
 
       {weatherData && (
-        <div className={classNames("weather-card-content", isHebrew ? 'hebrew' : '')}>
-          <button className="remove-btn" onClick={() => onRemove(city.id)}>
-            <img src="close-icon.svg" alt="Close the card" className="remove-btn-img" />
+        <div className={classNames(styles.weather_card_content, isHebrew ? styles.hebrew : '')}>
+          <button className={styles.remove__btn} onClick={() => onRemove(city.id)}>
+            <img src="close-icon.svg" alt="Close the card" className={styles.remove__btn__img} />
           </button>
-          <div className="top-content">
-          <h2 className={classNames("location", isHebrew ? 'hebrew' : '')}>
+          <div className={styles.top__content}>
+          <h2 className={classNames(styles.location, isHebrew ? styles.hebrew : '')}>
               {`${weatherData.sys.country}, ${weatherData.name}`}
             </h2>
-            <div className='description'>
+            <div className={styles.description}>
               <img
-                className="weather-icon"
+                className={styles.weather__icon}
                 src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
                 alt="Weather Icon"
               />
-              <p className="text">{weatherData.weather[0].description}</p>
+              <p className={styles.text}>{weatherData.weather[0].description}</p>
             </div>
           </div>
           <LocalTime city={weatherData.coord}/>
           <WeatherForecastChart city={city.name} temp={currentTemp} />
-          <div className="battom-block">
-            <div className="temperature-block">
-              <div className="temperature">
+          <div className={styles.battom__block}>
+            <div className={styles.temperature__block}>
+              <div className={styles.temperature}>
                 <p>{currentTemp > 0 ? `+${currentTemp}` : currentTemp}</p>
-                <div className="unit-buttons">
+                <div className={styles.unit__buttons}>
                   <button
-                    className={classNames(city.temperatureUnit === 'metric' ? 'selected' : '', 'button')}
+                    className={classNames(city.temperatureUnit === 'metric' ? styles.selected : '', styles.button)}
                     onClick={() => handleTemperatureUnitChange('metric')}
                   >
                     °C
                   </button>
-                  <div className='line'/>
+                  <div className={styles.line}/>
                   <button
-                    className={classNames(city.temperatureUnit === 'imperial' ? 'selected' : '', 'button')}
+                    className={classNames(city.temperatureUnit === 'imperial' ? styles.selected : '', styles.button)}
                     onClick={() => handleTemperatureUnitChange('imperial')}
                   >
                     °F
                   </button>
                 </div>
               </div>
-              <p className="feels-like">
+              <p className={styles.feels__like}>
                {t('feelsLike')}  <span>{feelsLike > 0 ? `+${feelsLike}` : feelsLike}
                 {city.temperatureUnit === 'metric' ? '°C' : '°F'}</span>
               </p>
             </div>
-            <div className="editional-info">
-              <p className="wind">
-                {t('wind')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.wind.speed}{city.temperatureUnit === 'metric' ? 'm/s' : 'mph'}</span>
+            <div className={styles.aditional__info}>
+              <p className={styles.wind}>
+                {t('wind')} <span className={currentTemp < 0 ? styles.cold : styles.warm}>{weatherData.wind.speed}{city.temperatureUnit === 'metric' ? 'm/s' : 'mph'}</span>
               </p>
               <p className="humidity">
-                {t('humidity')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.main.humidity} %</span>
+                {t('humidity')} <span className={currentTemp < 0 ? styles.cold : styles.warm}>{weatherData.main.humidity} %</span>
               </p>
               <p className="pressure">
-                {t('pressure')} <span className={currentTemp < 0 ? 'cold' : 'warm'}>{weatherData.main.pressure}Pa</span>
+                {t('pressure')} <span className={currentTemp < 0 ? styles.cold : styles.warm}>{weatherData.main.pressure}Pa</span>
               </p>
             </div>
           </div>
         </div>
       )}
-
-
     </div>
   );
 };

@@ -1,0 +1,152 @@
+.weather__app {
+  padding: 25px;
+  position: relative;
+
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
+
+  &.hebrew .modal__content,
+  &.hebrew .suggestion__item,
+  &.hebrew .input__button,
+  &.hebrew .dropdown {
+    transform: scaleX(-1);
+  }
+
+  &.hebrew .modal__button {
+    flex-direction: row-reverse;
+  }
+
+  &.hebrew .dropdown {
+    left: 40px;
+  }
+}
+
+
+.weather__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  transition: all 2s ease;
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  @media (max-width: 500px) {
+    right: 10px;
+  }
+
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  &__content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  &__button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 80px;
+
+    &:hover {
+      background-color: #45a049;
+    }
+
+    &:last-child {
+      background-color: #f44336;
+    }
+
+    &:last-child:hover {
+      background-color: #d32f2f;
+    }
+  }
+}
+
+
+
+
+
+.dropdown {
+  color: #AFAFAF;
+  width: 40px;
+
+  &::before {
+    position: absolute;
+    content: '';
+    left: -25px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../../../public/Icon-language.svg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+[data-pc-section="wrapper"] {
+  width: 71px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  font: normal normal normal 14px/20px Jost;
+  letter-spacing: 0;
+  color: #000000;
+}
+
+[role="option"] {
+  padding-top: 3px;
+  padding-left: 5px;
+}
+
+[aria-selected="true"] {
+  background-color: #F2F2F2;
+}
+
+[aria-expanded="true"] .p-icon {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+[aria-expanded="false"] .p-icon {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage, addCity, removeCity } from '../../store/slices/weatherSlice';
 import WeatherCard from '../WeatherCard/WeatherCard';
-import './WeatherApp.css';
+import styles from './WeatherApp.module.scss';
 import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from 'react-i18next';
 import { fetchWeatherByLocation } from '../../api/weatherApi';
@@ -102,21 +102,22 @@ const WeatherApp = () => {
   const isHebrew = i18n.language === 'he';
   const isUkrainian = i18n.language === 'uk';
   return (
-    <div className={`weather-app ${isHebrew ? 'hebrew' : ''} ${isUkrainian ? 'uk' : ''}`}>
-      <Dropdown value={language} onChange={(e) => changeLanguage(e.value)} options={languages} optionLabel="name" className="drop-down" />
+    <div className={`${styles.weather__app} ${isHebrew ? styles.hebrew : ''} ${isUkrainian ? styles.uk : ''}`}>
+
+      <Dropdown value={language} onChange={(e) => changeLanguage(e.value)} options={languages} optionLabel="name" className={styles.dropdown}/>
 
       <CityInput setShowModal={setShowModal} />
-      <div className="weather-container">
+      <div className={styles.weather__container}>
         {cities.map((city) => (
           <WeatherCard key={city.id} city={city} onRemove={() => handleRemoveCity(city.id)} />
         ))}
       </div>
       {showAddCityModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className={styles.modal}>
+          <div className={styles.modal__content}>
             <h2>{t('modalQuestion')}</h2>
             <p>{modalCityData.name}</p>
-            <div class="modal-button">
+            <div class={styles.modal__button}>
               <button onClick={handleAddCityConfirmed}>{t('addButton')}</button>
               <button onClick={handleModalClose}>{t('modalCancel')}</button>
             </div>
@@ -124,8 +125,8 @@ const WeatherApp = () => {
         </div>
       )}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className={styles.modal}>
+          <div className={styles.modal__content}>
             <h2>{t('error')}</h2>
             <p>{t('errorMessage')}</p>
             <button onClick={() => setShowModal(false)}>{t('errorButton')}</button>
