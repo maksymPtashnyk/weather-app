@@ -46,7 +46,7 @@ const WeatherCard = ({ city, onRemove }) => {
             <img src="close-icon.svg" alt="Close the card" className={styles.remove__btn__img} />
           </button>
           <div className={styles.top__content}>
-          <h2 className={classNames(styles.location, isHebrew ? styles.hebrew : '')}>
+            <h2 className={classNames(styles.location, isHebrew ? styles.hebrew : '')}>
               {`${weatherData.sys.country}, ${weatherData.name}`}
             </h2>
             <div className={styles.description}>
@@ -58,8 +58,8 @@ const WeatherCard = ({ city, onRemove }) => {
               <p className={styles.text}>{weatherData.weather[0].description}</p>
             </div>
           </div>
-          <LocalTime city={weatherData.coord}/>
-          <WeatherForecastChart city={city.name} temp={currentTemp} />
+          <LocalTime city={weatherData.coord} />
+          <WeatherForecastChart city={city} temp={currentTemp} />
           <div className={styles.battom__block}>
             <div className={styles.temperature__block}>
               <div className={styles.temperature}>
@@ -71,7 +71,7 @@ const WeatherCard = ({ city, onRemove }) => {
                   >
                     °C
                   </button>
-                  <div className={styles.line}/>
+                  <div className={styles.line} />
                   <button
                     className={classNames(city.temperatureUnit === 'imperial' ? styles.selected : '', styles.button)}
                     onClick={() => handleTemperatureUnitChange('imperial')}
@@ -81,8 +81,8 @@ const WeatherCard = ({ city, onRemove }) => {
                 </div>
               </div>
               <p className={styles.feels__like}>
-               {t('feelsLike')}  <span>{feelsLike > 0 ? `+${feelsLike}` : feelsLike}
-                {city.temperatureUnit === 'metric' ? '°C' : '°F'}</span>
+                {t('feelsLike')}  <span>{feelsLike > 0 ? `+${feelsLike}` : feelsLike}
+                  {city.temperatureUnit === 'metric' ? '°C' : '°F'}</span>
               </p>
             </div>
             <div className={styles.aditional__info}>

@@ -3,6 +3,7 @@ import styles from './Diagram.module.scss';
 import { format, parseISO } from 'date-fns';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, LabelList } from 'recharts';
 import { fetchWeatherForecastData } from '../../api/weatherApi';
+import i18next from 'i18next';
 
 const formatDate = (dateString) => {
   try {
@@ -22,7 +23,7 @@ const formatDate = (dateString) => {
 
 const WeatherForecastChart = ({ city, temp }) => {
   const [data, setData] = useState([]);
-  const gradientId = `temperatureGradient-${city.replace(/\s+/g, '')}`;
+  const gradientId = `temperatureGradient-${city.name.replace(/\s+/g, '')}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,8 +40,11 @@ const WeatherForecastChart = ({ city, temp }) => {
 
   const getColor = (temperature) => (temperature < 0 ? '#5B8CFF' : '#FFA25B');
 
+  const isHebrew = i18next.language === 'he';
+
+
   return (
-    <ResponsiveContainer width="100%" height={220}>
+    <ResponsiveContainer width="100%" height={220} className={`${styles.wrapper} ${isHebrew ? styles.hebrew : ''}`}>
       <AreaChart data={data} cursor="pointer">
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">

@@ -76,7 +76,7 @@ export const fetchCityTime = async (lat, lon) => {
 
 export const fetchWeatherForecastData = async (city) => {
   try {
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city.name}&units=${city.temperatureUnit}&appid=${apiKey}`);
 
     return _(response.data.list)
       .groupBy(item => item.dt_txt.split(' ')[0])
