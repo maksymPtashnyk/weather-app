@@ -64,6 +64,7 @@ const WeatherApp = () => {
           id: response.id,
           name: response.name,
           temperatureUnit: 'metric',
+          location: true,
         };
 
         const isCityAlreadyAdded = cities.some(
