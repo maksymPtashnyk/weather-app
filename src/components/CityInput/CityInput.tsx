@@ -1,23 +1,28 @@
-// CityInput.js
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { fetchCitySuggestions, fetchWeatherByCity } from '../../api/weatherApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCity } from '../../store/slices/weatherSlice';
-import { useTranslation } from 'react-i18next'
-import styles from'./CityInput.module.scss'
+import { useTranslation } from 'react-i18next';
+import styles from './CityInput.module.scss';
+import { City, CitySuggestionResponse, RootState } from '../../types/types';
+import classNames from 'classnames';
 
-const CityInput = ({ setShowModal }) => {
-  const [newCity, setNewCity] = useState('');
+type Props = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CityInput: React.FC<Props> = ({ setShowModal }) => {
+  const [newCity, setNewCity] = useState<string>('');
   const [debouncedNewCity] = useDebounce(newCity, 500);
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<CitySuggestionResponse[]>([]);
 
-  const {t, i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch();
-  const cities = useSelector((state) => state.cities);
+  const cities = useSelector((state: RootState) => state.weather.cities);
 
-  const handleInputChange = (input) => {
+  const handleInputChange = (input: string) => {
     setNewCity(input);
   };
 
@@ -44,7 +49,7 @@ const CityInput = ({ setShowModal }) => {
       try {
         const response = await fetchWeatherByCity(debouncedNewCity);
 
-        const newCityData = {
+        const newCityData: City = {
           id: response.id,
           name: response.name,
           temperatureUnit: 'metric',
@@ -65,7 +70,7 @@ const CityInput = ({ setShowModal }) => {
     }
   };
 
-  const handleSuggestionClick = (suggestion) => {
+  const handleSuggestionClick = (suggestion: CitySuggestionResponse) => {
     setNewCity(suggestion.name);
     handleAddCity();
     setSuggestions([]);
@@ -80,7 +85,11 @@ const CityInput = ({ setShowModal }) => {
   const isUkrainian = i18n.language === 'uk';
 
   return (
-    <div className={`${styles.input__block} ${isHebrew ? styles.hebrew : ''} ${isUkrainian ? styles.uk : ''}`}>
+    <div className={classNames(
+      styles.input__block,
+      isHebrew ? styles.hebrew : '',
+      isUkrainian ? styles.uk : '',
+    )}>
       <div className={styles.input}>
         <input
           className={styles.input__element}
@@ -92,7 +101,7 @@ const CityInput = ({ setShowModal }) => {
           {suggestions.map((suggestion) => (
             <div
               className={styles.suggestion__item}
-              key={suggestion.name}
+              key={suggestion.id}
               onClick={() => handleSuggestionClick(suggestion)}
             >
               {`${suggestion.name}, ${suggestion.country}`}
@@ -106,13 +115,16 @@ const CityInput = ({ setShowModal }) => {
           {t('addButton')}
         </button>
         <button
-          className={`${styles.clear__button} ${debouncedNewCity ? styles.show : ''}`}
+          className={classNames(
+            styles.clear__button,
+            debouncedNewCity ? styles.show : '',
+          )}
           onClick={handleClearInput}
         >
           {t('clearButton')}
         </button>
       </div>
-    </div>
+    </div >
   );
 };
 
